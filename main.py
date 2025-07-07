@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import JSONResponse
 from io import StringIO
 import csv
 from typing import List
@@ -92,3 +93,31 @@ async def download_csv(
         media_type="text/csv",
         headers={"Content-Disposition": "attachment; filename=loan_schedule.csv"}
     )
+
+@app.post("/calculate-json")
+async def calculate_json(
+    principal: float = Form(...),
+    annual_interest_rate: float = Form(...),
+    term_years: int = Form(...),
+    payments_per_year: int = Form(...),
+    interest_only_years: int = Form(...),
+    seasonal_months: str = Form(...)
+):
+    months = [int(m.strip()) for m in seasonal_months.split(",") if m.strip().isdigit()]
+
+    input_data = LoanInput(
+        principal=principal,
+        annual_interest_rate=annual_interest_rate,
+        term_years=term_years,
+        payments_per_year=payments_per_year,
+        seasonal_months=months,
+        interest_only_years=interest_only_years
+    )
+
+    schedule, total_interest, total_paid = calculate_amortization_schedule(input_data)
+
+    return JSONResponse(content={
+        "total_interest": total_interest,
+        "total_paid": total_paid,
+        "schedule": [row.model_dump() for row in schedule]
+    })
