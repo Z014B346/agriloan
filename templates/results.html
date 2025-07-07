@@ -1,48 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8" />
     <title>Loan Amortization Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .card {
+            border-radius: 12px;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .btn {
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-    <h1>Loan Amortization Schedule</h1>
+<div class="container py-5">
+    <h1 class="mb-4 text-center text-primary">📄 Loan Amortization Schedule</h1>
 
-    <p><strong>Total Interest Paid:</strong> ${{ total_interest }}</p>
-    <p><strong>Total Amount Paid:</strong> ${{ total_paid }}</p>
+    <div class="card shadow-sm p-4 mb-5">
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Total Interest Paid:</strong> ${{ total_interest }}</p>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Total Amount Paid:</strong> ${{ total_paid }}</p>
+            </div>
+        </div>
+    </div>
 
     {% if schedule %}
-        <table border="1">
-            <tr>
-                <th>Year</th>
-                <th>Month</th>
-                <th>Payment</th>
-                <th>Principal Paid</th>
-                <th>Interest Paid</th>
-                <th>Balance</th>
-            </tr>
-            {% for entry in schedule %}
-            <tr>
-                <td>{{ entry.year }}</td>
-                <td>{{ entry.month }}</td>
-                <td>{{ entry.payment }}</td>
-                <td>{{ entry.principal_paid }}</td>
-                <td>{{ entry.interest_paid }}</td>
-                <td>{{ entry.balance }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    <div class="card shadow-sm p-4">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark text-center">
+                    <tr>
+                        <th>Year</th>
+                        <th>Month</th>
+                        <th>Payment</th>
+                        <th>Principal Paid</th>
+                        <th>Interest Paid</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for entry in schedule %}
+                    <tr>
+                        <td>{{ entry.year }}</td>
+                        <td>{{ entry.month }}</td>
+                        <td>${{ "%.2f"|format(entry.payment) }}</td>
+                        <td>${{ "%.2f"|format(entry.principal_paid) }}</td>
+                        <td>${{ "%.2f"|format(entry.interest_paid) }}</td>
+                        <td>${{ "%.2f"|format(entry.balance) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     {% else %}
-        <p>No payments in schedule.</p>
+        <div class="alert alert-warning text-center mt-4" role="alert">
+            No payments in the schedule.
+        </div>
     {% endif %}
 
-    <h2>Download as CSV</h2>
-    <form method="post" action="/download-csv">
-        <input type="hidden" name="principal" value="{{ form_data.principal }}">
-        <input type="hidden" name="annual_interest_rate" value="{{ form_data.annual_interest_rate }}">
-        <input type="hidden" name="term_years" value="{{ form_data.term_years }}">
-        <input type="hidden" name="payments_per_year" value="{{ form_data.payments_per_year }}">
-        <input type="hidden" name="interest_only_years" value="{{ form_data.interest_only_years }}">
-        <input type="hidden" name="seasonal_months" value="{{ form_data.seasonal_months }}">
-        <button type="submit">📥 Download CSV</button>
-    </form>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-5">
+        <form method="post" action="/download-csv" class="mb-3 mb-md-0">
+            <input type="hidden" name="principal" value="{{ form_data.principal }}">
+            <input type="hidden" name="annual_interest_rate" value="{{ form_data.annual_interest_rate }}">
+            <input type="hidden" name="term_years" value="{{ form_data.term_years }}">
+            <input type="hidden" name="payments_per_year" value="{{ form_data.payments_per_year }}">
+            <input type="hidden" name="interest_only_years" value="{{ form_data.interest_only_years }}">
+            <input type="hidden" name="seasonal_months" value="{{ form_data.seasonal_months }}">
+            <button type="submit" class="btn btn-success me-md-3">
+                📥 Download CSV
+            </button>
+        </form>
+
+        <a href="/" class="btn btn-outline-secondary">← Back to Calculator</a>
+    </div>
+</div>
 </body>
 </html>
