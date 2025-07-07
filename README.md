@@ -1,9 +1,9 @@
-This contains a calculator for amortized loans, 
+This contains a calculator for amortized loans.
 
-current accepted variables:
-  principle 
-  interest rate
-  term (years)
-  Payments per year
-  seasonal months (Month on which you pay, int range 1-12)
-  interest only years (how many years are interest only)
+current accepted variables:<br>
+  principle <br>
+  interest rate<br>
+  term (years)<br>
+  Payments per year<br>
+  seasonal months (Month on which you pay, int range 1-12)<br>
+  interest only years (how many years are interest only)<br>
