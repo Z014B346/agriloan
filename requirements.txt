@@ -3,3 +3,4 @@ uvicorn
 pydantic
 numpy
 jinja2
+python-multipart
