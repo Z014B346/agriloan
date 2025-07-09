@@ -1,3 +1,5 @@
+***DISCLAIMER AI was used during this project as it is intended for my own personal learning***
+
 This contains a calculator for amortized loans.
 
 current accepted variables:<br>
