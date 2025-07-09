@@ -1,4 +1,4 @@
-***DISCLAIMER AI was used during this project as it is intended for my own personal learning***
+***DISCLAIMER AI was used during this project for front end and structure, I mainly wanted to focus on the logic as this is my own personal learning goal***
 
 This contains a calculator for amortized loans.
 
