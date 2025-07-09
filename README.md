@@ -6,6 +6,8 @@ This contains a calculator for amortized loans.
 
 I have a hosted site at https://amortisedloan.onrender.com/ which is also available as an api in the RapidApi marketplace: https://rapidapi.com/samsewell95/api/agribusiness-loan-calculator/playground/apiendpoint_40c02b7a-fbb6-43b5-acea-a3d99be73d74.
 
+If you wish to run locally for testing you can use this command in cmd: uvicorn main::app --reload (just make sure the directory is pointing to where the main.py file is)
+
 current accepted variables:<br>
   principle <br>
   interest rate<br>
